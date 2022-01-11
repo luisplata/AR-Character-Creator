@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects:
+    Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: 1173e93edaf4f2342bebe868480f5bf8, type: 2}
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: d24cdc4355c5448488c4ebab467923da, type: 2}
     UnityEditor.XR.ARKit.ARKitSettings: {fileID: 11400000, guid: 3300fb84e7e151844bbbca629af3b9fb, type: 2}
+    com.unity.xr.magicleap.magic_leap_settings: {fileID: 11400000, guid: dd34be7e33717e84b9dae4fc3c8325da, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: b3766513ca78b88408bf70c37149f5aa, type: 2}
+    xr.sdk.mock-hmd.settings: {fileID: 11400000, guid: c2e764cf1e6abef499fe85e12113c483, type: 2}
