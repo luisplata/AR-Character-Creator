@@ -16,6 +16,7 @@ public class InstallerStatesOfGame : MonoBehaviour, IMediadorAR
     [SerializeField] private StateOfGame stateOfGame;
     [SerializeField] private ARPlaneManager plane;
     [SerializeField] private ARPointCloudManager point;
+    [SerializeField] private ColliderInCamera coli;
     static List<ARRaycastHit> s_Hits = new List<ARRaycastHit>();
     IEnumerator Start()
     {
@@ -33,6 +34,10 @@ public class InstallerStatesOfGame : MonoBehaviour, IMediadorAR
         {
             ARSession.stateChanged += onChange;
             stateOfGame.Configuracion(this);
+            coli.Configurate(stateOfGame);
+            coli.OnCollisionEnterDelegate += () =>
+            {
+            };
         }
 
     }
