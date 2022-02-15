@@ -17,6 +17,6 @@ public class ColliderInCamera : MonoBehaviour
     {
         _mediator.Write("Colisiono con un objeto!");
         OnCollisionEnterDelegate?.Invoke();
-        Destroy(collision.gameObject, 2);
+        //Destroy(collision.gameObject, 2);
     }
 }

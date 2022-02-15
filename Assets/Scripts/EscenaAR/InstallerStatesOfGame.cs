@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
@@ -17,7 +18,11 @@ public class InstallerStatesOfGame : MonoBehaviour, IMediadorAR
     [SerializeField] private ARPlaneManager plane;
     [SerializeField] private ARPointCloudManager point;
     [SerializeField] private ColliderInCamera coli;
+    [SerializeField] private Transform player;
     static List<ARRaycastHit> s_Hits = new List<ARRaycastHit>();
+    private bool _hasClick;
+    private Vector2 _mousePosition;
+
     IEnumerator Start()
     {
         stateOfGame.Write($"{ARSession.state}");
@@ -33,11 +38,7 @@ public class InstallerStatesOfGame : MonoBehaviour, IMediadorAR
         else
         {
             ARSession.stateChanged += onChange;
-            stateOfGame.Configuracion(this);
-            coli.Configurate(stateOfGame);
-            coli.OnCollisionEnterDelegate += () =>
-            {
-            };
+            StatesOfGame(ARSession.state);
         }
 
     }
@@ -45,11 +46,36 @@ public class InstallerStatesOfGame : MonoBehaviour, IMediadorAR
 
     void onChange(ARSessionStateChangedEventArgs eventArgs)
     {
-        stateOfGame.Write($"{eventArgs.state}");
+        StatesOfGame(eventArgs.state);
+    }
+
+    private void StatesOfGame(ARSessionState eventArgs)
+    {
+        switch (eventArgs)
+        {
+            case ARSessionState.None:
+            case ARSessionState.Unsupported:
+            case ARSessionState.CheckingAvailability:
+            case ARSessionState.NeedsInstall:
+            case ARSessionState.Installing:
+                stateOfGame.Write($"{eventArgs} here is: None, unsuporeted, installing");
+                stateOfGame.Restart();
+                break;
+            case ARSessionState.Ready:
+            case ARSessionState.SessionTracking:
+            case ARSessionState.SessionInitializing:
+                stateOfGame.Write($"{eventArgs} here is: ready, traking, initializing");
+                stateOfGame.Write($"configurando");
+                stateOfGame.Configuracion(this);
+                coli.Configurate(stateOfGame);
+                coli.OnCollisionEnterDelegate += () => { };
+                break;
+        }
     }
 
     public void StartSession()
     {
+        stateOfGame.Write($"StartSession");
         m_Session.enabled = true;
         ARSession.stateChanged += onChange;
     }
@@ -85,20 +111,45 @@ public class InstallerStatesOfGame : MonoBehaviour, IMediadorAR
         return m_RaycastManager;
     }
 
+    public void OnMousePosition(InputAction.CallbackContext context)
+    {
+        //stateOfGame.Write($"{context.ReadValue<Vector2>()}");
+        _mousePosition = context.ReadValue<Vector2>();
+    }
+    
+    public void OnTouch(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            //button is press
+            _hasClick = true;
+        }
+        else if (context.canceled)
+        {
+            //button is released
+            _hasClick = false;
+        }
+        stateOfGame.Write($"_hasClick {_hasClick}");
+    }
     public bool Touch()
     {
-        return Input.touchCount > 0;
-    }
-
-    public Vector2 TouchPosition()
-    {
-        return Input.GetTouch(0).position;
+        return _hasClick;// Input.touchCount > 0;
     }
 
     public void HideDebuggers()
     {
-        plane.enabled = false;
-        point.enabled = false;
+        plane.planePrefab = null;
+        point.pointCloudPrefab = null;
+    }
+
+    public Vector2 GetMousePosition()
+    {
+        return _mousePosition;
+    }
+
+    public Transform GetPlayer()
+    {
+        return player;
     }
 
     public void Repetir()

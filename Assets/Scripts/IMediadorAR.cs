@@ -8,6 +8,7 @@ public interface IMediadorAR
     GameObject InstantiateObjectInRaycast(Vector2 pointToRay, GameObject prefab);
     ARRaycastManager GetRayCastManager();
     bool Touch();
-    Vector2 TouchPosition();
     void HideDebuggers();
+    Vector2 GetMousePosition();
+    Transform GetPlayer();
 }

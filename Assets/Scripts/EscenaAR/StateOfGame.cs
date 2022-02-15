@@ -7,24 +7,22 @@ using UnityEngine.XR.ARSubsystems;
 
 public class StateOfGame : MonoBehaviour, IMediator
 {
-    [SerializeField] private Image punto;
-    [SerializeField] private Button disparador;
     [SerializeField] private TextMeshProUGUI debugging;
     [SerializeField] GameObject m_PlacedPrefab;
-    [SerializeField] private EnemiSpawnerMediator spawnerEnemy;
     [SerializeField] private ShooterToEnemies shooter;
-    [SerializeField] private TextMeshProUGUI vida;
-    [SerializeField] private GameObject panelToGameOver;
+    [SerializeField] private Camera camera;
+    [SerializeField] private TMP_InputField input;
     private EnemyStatesConfiguration _enemyStatesConfiguration;
     private IMediadorAR _ar;
     private bool _buclePrincipal;
     private bool hasWait;
+    private bool canUse;
     private Vector2 positionToClick;
     private bool _hasClick;
     private int _vidaHeal;
-    
-    
-    
+    private float _porcentOfOne;
+
+
     public void Configuracion(IMediadorAR ar)
     {
         _ar = ar;
@@ -38,14 +36,8 @@ public class StateOfGame : MonoBehaviour, IMediator
         _enemyStatesConfiguration.AddState(EnemyStatesConfiguration.FinishGame, new FinishGame(this));
         _buclePrincipal = true;
         StartState(_enemyStatesConfiguration.GetInitialState());
-        disparador.onClick.AddListener(() =>
-        {
-            Write($"{punto.transform.position}");
-            Write($"{_ar.GetSessionOrigin().ScreenToViewportPoint(punto.transform.position)}");
-            Write($"{_ar.GetSessionOrigin().ScreenToWorldPoint(punto.transform.position)}");
-            positionToClick = punto.transform.position;
-        });
-        ColocarVida(100);
+        canUse = true;
+        Write($"Configurado");
     }
 
     private void ColocarVida(int _vida)
@@ -56,15 +48,16 @@ public class StateOfGame : MonoBehaviour, IMediator
 
     private void RedibujarVida()
     {
-        vida.text = $"{_vidaHeal}";
+        //vida.text = $"{_vidaHeal}";
     }
 
     private void Update()
     {
+        if (!canUse) return;
         if (!_hasClick && _ar.Touch())
         {
             _hasClick = true;
-            positionToClick = _ar.TouchPosition();
+            positionToClick = _ar.GetMousePosition();
         }
     }
     private async void StartState(IEnemyState state, object data = null)
@@ -97,14 +90,27 @@ public class StateOfGame : MonoBehaviour, IMediator
         debugging.text += $"{text} \n";
     }
 
-    public void ShootRaycast(Action action)
+    public bool ShootRaycast(Action action)
     {
-        spawnerEnemy = _ar.InstantiateObjectInRaycast(GetPositionInWord(),m_PlacedPrefab).GetComponent<EnemiSpawnerMediator>();
+        try
+        {
+            Write($"instancia");
+            var escenarioInteractivo = _ar.InstantiateObjectInRaycast(GetPositionInWord(), m_PlacedPrefab);//.GetComponent<EscenarioInteractivo>();
+            //escenarioInteractivo.Configuracion(camera, this, _ar.GetPlayer());
+            escenarioInteractivo.transform.localScale = Vector3.one * float.Parse(input.text);
+            action?.Invoke();
+            return true;
+        }
+        catch (Exception e)
+        {
+            Write($"Error - {e.Message}");
+            return false;
+        }
     }
 
     public void ConfiguraEnemigoSpawner()
     {
-        spawnerEnemy.Configuration(this);
+        //spawnerEnemy.Configuration(this);
     }
 
     public void RestarVida(int vidaToRestar)
@@ -120,13 +126,13 @@ public class StateOfGame : MonoBehaviour, IMediator
 
     public void StopSpawnAndDestroidAll()
     {
-        spawnerEnemy.StopSpawn();
-        spawnerEnemy.CleanEnemies();
+        //spawnerEnemy.StopSpawn();
+        //spawnerEnemy.CleanEnemies();
     }
 
     public void ShowTheGameOver()
     {
-        panelToGameOver.SetActive(true);        
+        //panelToGameOver.SetActive(true);        
     }
 
     public void ConfigureShooter()
@@ -149,6 +155,16 @@ public class StateOfGame : MonoBehaviour, IMediator
         _ar.HideDebuggers();
     }
 
+    public Camera GetCamera()
+    {
+        return camera;
+    }
+
+    public Vector3 GetMousePositionInScream()
+    {
+        return _ar.GetMousePosition();
+    }
+
     public void StartSessionOfAR()
     {
         _ar.StartSession();
@@ -163,7 +179,8 @@ public class StateOfGame : MonoBehaviour, IMediator
 
     public Vector2 GetPositionInWord()
     {
-        return positionToClick;
+        Write($"{_ar.GetMousePosition()} _ar.GetMousePosition()");
+        return _ar.GetMousePosition();
     }
 
     public bool FinishGame()
@@ -171,4 +188,9 @@ public class StateOfGame : MonoBehaviour, IMediator
         return _vidaHeal <= 0;
     }
 
+    public void Restart()
+    {
+        _buclePrincipal = false;
+        canUse = false;
+    }
 }

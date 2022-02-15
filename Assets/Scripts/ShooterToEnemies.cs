@@ -17,7 +17,7 @@ public abstract class ShooterToEnemies : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!TryGetTouchPosition() || !canUse) return;
+        if (!canUse || !TryGetTouchPosition()) return;
         FixUpdate();
     }
 }

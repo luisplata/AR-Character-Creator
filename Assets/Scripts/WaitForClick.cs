@@ -14,15 +14,17 @@ public class WaitForClick : IEnemyState
 
     public async UniTask<StateResult> DoAction(object data)
     {
+        _mediator.Write($"Esperando por click");
         while (!_mediator.HasClickInScream())
         {
-            await UniTask.Delay(TimeSpan.FromMilliseconds(100));
+            await UniTask.NextFrame();
         }
-        _mediator.ShootRaycast(()=>
+        _mediator.Write($"Clikeo");
+        if (!_mediator.ShootRaycast(() => { _mediator.Write($"after shooter"); }))
         {
-            
-        });
+            return new StateResult(EnemyStatesConfiguration.WaitForClickInSpace);
+        }
         _mediator.HideDebuggers();
-        return new StateResult(EnemyStatesConfiguration.Game);
+        return new StateResult(EnemyStatesConfiguration.WaitForClickInSpace);
     }
 }

@@ -7,7 +7,7 @@ public interface IMediator
     void Write(string text);
     void StartSessionOfAR();
     bool HasClickInScream();
-    void ShootRaycast(Action action);
+    bool ShootRaycast(Action action);
     bool FinishGame();
     void ConfiguraEnemigoSpawner();
     void RestarVida(int i);
@@ -18,4 +18,6 @@ public interface IMediator
     ARRaycastManager GetRayCastManager();
     Camera GetSessionOrigin();
     void HideDebuggers();
+    Camera GetCamera();
+    Vector3 GetMousePositionInScream();
 }

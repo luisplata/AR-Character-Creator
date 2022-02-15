@@ -9,40 +9,25 @@ public class ArShooter : ShooterToEnemies
     protected override bool TryGetTouchPosition()
     {
         //_mediator.Write("Click en AR");
-        return Input.touchCount > 0;
+        return _mediator.HasClickInScream();//Input.touchCount > 0;
     }
 
     protected override void FixUpdate()
     {
         _mediator.Write("Touch");
-        var touchPosition = Input.GetTouch(0).position;
+        var _mousePos = _mediator.GetMousePositionInScream();
+        var touchPosition = _mousePos;//Input.GetTouch(0).position;
         var ray = _mediator.GetSessionOrigin().ScreenPointToRay(touchPosition);
         var allCol = Physics.RaycastAll(ray);
         foreach (var hit in allCol)
         {
-            if (hit.transform.TryGetComponent<EnemyInGame>(out var e))
+            _mediator.Write($"{hit.collider.gameObject.name} colisiono");
+            _mediator.Write($"{touchPosition} touchPosition");
+            if (hit.collider.gameObject.TryGetComponent<ObjetoClickeable>(out var e))
             {
-                e.DestroyLogic();
-                _mediator.Write($"Colisiono");
+                e.Click();
+                break;
             }
         }
-        /*
-        if (_mediator.GetRayCastManager().Raycast(touchPosition, s_Hits))
-        {
-            // Raycast hits are sorted by distance, so the first one
-            // will be the closest hit.
-            var hitPose = s_Hits[0].pose;
-            _mediator.Write($"{hitPose.position} position");
-            foreach (var hit in s_Hits)
-            {
-                _mediator.Write($"{hit.trackable.gameObject.name} name");
-                if (hit.trackable.gameObject.TryGetComponent<EnemyInGame>(out var e))
-                {
-                    e.DestroyLogic();
-                    _mediator.Write($"Colisiono");
-                    break;
-                }
-            }
-        }*/
     }
 }

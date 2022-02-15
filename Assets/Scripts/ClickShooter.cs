@@ -2,9 +2,10 @@
 
 public class ClickShooter : ShooterToEnemies
 {
+    
     protected override bool TryGetTouchPosition()
     {
-        return Input.GetMouseButtonDown(0);
+        return _mediator.HasClickInScream();
     }
 
     protected override void FixUpdate()
@@ -13,18 +14,18 @@ public class ClickShooter : ShooterToEnemies
         RaycastHit[] hits;
         var posicion = transform.position;
         // Does the ray intersect any objects excluding the player layer
-        var _mousePos = Input.mousePosition;
+        var _mousePos = _mediator.GetMousePositionInScream();
         _mousePos.z = 2;
         _mediator.Write($"{_mousePos} mouse");
-        hits = Physics.RaycastAll(Camera.main.transform.position, (Camera.main.ScreenToWorldPoint(_mousePos) - Camera.main.transform.position), Mathf.Infinity);
-        _mediator.Write($"{Camera.main.ScreenToWorldPoint(_mousePos)} screanToWord");
-        Debug.DrawRay(Camera.main.transform.position, ((Camera.main.ScreenToWorldPoint(_mousePos) - Camera.main.transform.position)) * 100, Color.yellow);
+        hits = Physics.RaycastAll(_mediator.GetCamera().transform.position, (_mediator.GetCamera().ScreenToWorldPoint(_mousePos) - _mediator.GetCamera().transform.position), Mathf.Infinity);
+        _mediator.Write($"{_mediator.GetCamera().ScreenToWorldPoint(_mousePos)} screanToWord");
+        Debug.DrawRay(_mediator.GetCamera().transform.position, ((_mediator.GetCamera().ScreenToWorldPoint(_mousePos) - _mediator.GetCamera().transform.position)) * 100, Color.yellow);
         foreach (var hit in hits)
         {
-            if (hit.collider.gameObject.TryGetComponent<EnemyInGame>(out var e))
+            _mediator.Write($"{hit.collider.gameObject.name} colisiono");
+            if (hit.collider.gameObject.TryGetComponent<ObjetoClickeable>(out var e))
             {
-                e.DestroyLogic();
-                _mediator.Write($"Colisiono");
+                e.Click();
                 break;
             }
         }
