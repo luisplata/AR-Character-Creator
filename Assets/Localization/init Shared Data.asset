@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: init Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: init
+  m_TableCollectionNameGuidString: f3e4cab354b76ff4db01c2f8671664fc
+  m_Entries:
+  - m_Id: 8822247424
+    m_Key: title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 73817182208
+    m_Key: menu_options
+    m_Metadata:
+      m_Items: []
+  - m_Id: 113637904384
+    m_Key: menu_start
+    m_Metadata:
+      m_Items: []
+  - m_Id: 190959898624
+    m_Key: menu_option_scale
+    m_Metadata:
+      m_Items: []
+  - m_Id: 340323258368
+    m_Key: game_exit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5804851253248
+    m_Key: menu_option_language_spanish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5952499142656
+    m_Key: menu_option_language_english
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6090869231616
+    m_Key: menu_option_language
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31062434041856
+    m_Key: error_numero_invalido
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    id: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1644961913964

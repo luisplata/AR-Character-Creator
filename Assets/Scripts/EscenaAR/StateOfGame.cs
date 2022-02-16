@@ -1,4 +1,5 @@
 using System;
+using ServiceLocatorPath;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,7 +12,6 @@ public class StateOfGame : MonoBehaviour, IMediator
     [SerializeField] GameObject m_PlacedPrefab;
     [SerializeField] private ShooterToEnemies shooter;
     [SerializeField] private Camera camera;
-    [SerializeField] private TMP_InputField input;
     private EnemyStatesConfiguration _enemyStatesConfiguration;
     private IMediadorAR _ar;
     private bool _buclePrincipal;
@@ -21,6 +21,7 @@ public class StateOfGame : MonoBehaviour, IMediator
     private bool _hasClick;
     private int _vidaHeal;
     private float _porcentOfOne;
+    private float _scaleMultiply;
 
 
     public void Configuracion(IMediadorAR ar)
@@ -38,6 +39,7 @@ public class StateOfGame : MonoBehaviour, IMediator
         StartState(_enemyStatesConfiguration.GetInitialState());
         canUse = true;
         Write($"Configurado");
+        //_scaleMultiply = 
     }
 
     private void ColocarVida(int _vida)
@@ -97,7 +99,7 @@ public class StateOfGame : MonoBehaviour, IMediator
             Write($"instancia");
             var escenarioInteractivo = _ar.InstantiateObjectInRaycast(GetPositionInWord(), m_PlacedPrefab);//.GetComponent<EscenarioInteractivo>();
             //escenarioInteractivo.Configuracion(camera, this, _ar.GetPlayer());
-            escenarioInteractivo.transform.localScale = Vector3.one * float.Parse(input.text);
+            escenarioInteractivo.transform.localScale = Vector3.one * ServiceLocator.Instance.GetService<ISaveData>().GetFloat("scale");
             action?.Invoke();
             return true;
         }
