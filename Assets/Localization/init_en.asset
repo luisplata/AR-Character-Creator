@@ -54,5 +54,17 @@ MonoBehaviour:
     m_Localized: The number what try insert is not valid
     m_Metadata:
       m_Items: []
+  - m_Id: 246969458544640
+    m_Localized: Pose
+    m_Metadata:
+      m_Items: []
+  - m_Id: 247122328342528
+    m_Localized: Character
+    m_Metadata:
+      m_Items: []
+  - m_Id: 247652144435200
+    m_Localized: Scale
+    m_Metadata:
+      m_Items: []
   references:
     version: 1

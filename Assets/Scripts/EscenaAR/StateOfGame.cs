@@ -12,6 +12,8 @@ public class StateOfGame : MonoBehaviour, IMediator
     [SerializeField] GameObject m_PlacedPrefab;
     [SerializeField] private ShooterToEnemies shooter;
     [SerializeField] private Camera camera;
+    [SerializeField] private UiController uiController;
+    
     private EnemyStatesConfiguration _enemyStatesConfiguration;
     private IMediadorAR _ar;
     private bool _buclePrincipal;
@@ -22,9 +24,10 @@ public class StateOfGame : MonoBehaviour, IMediator
     private int _vidaHeal;
     private float _porcentOfOne;
     private float _scaleMultiply;
+    private PjController _sceneInteractive;
 
 
-    public void Configuracion(IMediadorAR ar)
+    public void Configuration(IMediadorAR ar)
     {
         _ar = ar;
 
@@ -97,9 +100,8 @@ public class StateOfGame : MonoBehaviour, IMediator
         try
         {
             Write($"instancia");
-            var escenarioInteractivo = _ar.InstantiateObjectInRaycast(GetPositionInWord(), m_PlacedPrefab);//.GetComponent<EscenarioInteractivo>();
-            //escenarioInteractivo.Configuracion(camera, this, _ar.GetPlayer());
-            escenarioInteractivo.transform.localScale = Vector3.one * ServiceLocator.Instance.GetService<ISaveData>().GetFloat("scale");
+            _sceneInteractive = _ar.InstantiateObjectInRaycast(GetPositionInWord(), m_PlacedPrefab).GetComponent<PjController>();
+            _sceneInteractive.Configure(uiController);
             action?.Invoke();
             return true;
         }

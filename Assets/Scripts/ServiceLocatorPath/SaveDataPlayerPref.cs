@@ -4,6 +4,11 @@ namespace ServiceLocatorPath
 {
     public class SaveDataPlayerPref : ISaveData
     {
+        public SaveDataPlayerPref()
+        {
+            SaveFloat("scale", 0.1f);
+        }
+
         public void Save(string key, string value)
         {
             PlayerPrefs.SetString(key, value);

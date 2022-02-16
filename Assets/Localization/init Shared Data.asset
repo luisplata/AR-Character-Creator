@@ -51,6 +51,18 @@ MonoBehaviour:
     m_Key: error_numero_invalido
     m_Metadata:
       m_Items: []
+  - m_Id: 246969458544640
+    m_Key: game_options_pose
+    m_Metadata:
+      m_Items: []
+  - m_Id: 247122328342528
+    m_Key: game_options_character
+    m_Metadata:
+      m_Items: []
+  - m_Id: 247652144435200
+    m_Key: game_options_character_scale
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

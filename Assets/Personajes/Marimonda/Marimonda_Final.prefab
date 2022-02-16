@@ -1048,6 +1048,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8480395294931786577}
   - component: {fileID: -8299933977763992300}
+  - component: {fileID: 4989916282051614674}
   m_Layer: 0
   m_Name: Marimonda_Final
   m_TagString: Untagged
@@ -1081,7 +1082,7 @@ Animator:
   m_GameObject: {fileID: 9150111828083065323}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 5488d7ccd2d81274f974728498c10821, type: 2}
+  m_Controller: {fileID: 9100000, guid: 0ec2534a72eb6614e83c85fa8e9cb3a2, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1090,6 +1091,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &4989916282051614674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9150111828083065323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c90c63793d6207745a9f88999f682465, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: -8299933977763992300}
 --- !u!1 &9154423733695451571
 GameObject:
   m_ObjectHideFlags: 0

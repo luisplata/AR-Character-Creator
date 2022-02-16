@@ -13,7 +13,7 @@ public class DoomieAr : MonoBehaviour, IMediadorAR
 
     private void Start()
     {
-        state.Configuracion(this);
+        state.Configuration(this);
     }
 
     public void StartSession()

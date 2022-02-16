@@ -66,7 +66,7 @@ public class InstallerStatesOfGame : MonoBehaviour, IMediadorAR
             case ARSessionState.SessionInitializing:
                 stateOfGame.Write($"{eventArgs} here is: ready, traking, initializing");
                 stateOfGame.Write($"configurando");
-                stateOfGame.Configuracion(this);
+                stateOfGame.Configuration(this);
                 coli.Configurate(stateOfGame);
                 coli.OnCollisionEnterDelegate += () => { };
                 break;
