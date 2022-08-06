@@ -58,24 +58,24 @@ public class InstallerStatesOfGame : MonoBehaviour, IMediadorAR
             case ARSessionState.CheckingAvailability:
             case ARSessionState.NeedsInstall:
             case ARSessionState.Installing:
-                stateOfGame.Write($"{eventArgs} here is: None, unsuporeted, installing");
+                //stateOfGame.Write($"{eventArgs} here is: None, unsuporeted, installing");
                 stateOfGame.Restart();
                 break;
             case ARSessionState.Ready:
             case ARSessionState.SessionTracking:
             case ARSessionState.SessionInitializing:
-                stateOfGame.Write($"{eventArgs} here is: ready, traking, initializing");
-                stateOfGame.Write($"configurando");
+                //stateOfGame.Write($"{eventArgs} here is: ready, traking, initializing");
+                //stateOfGame.Write($"configurando");
                 stateOfGame.Configuration(this);
                 coli.Configurate(stateOfGame);
-                coli.OnCollisionEnterDelegate += () => { };
+                coli.OnCollisionEnterDelegate += () => { stateOfGame.Write($"OnCollisionEnterDelegate"); };
                 break;
         }
     }
 
     public void StartSession()
     {
-        stateOfGame.Write($"StartSession");
+        //stateOfGame.Write($"StartSession");
         m_Session.enabled = true;
         ARSession.stateChanged += onChange;
     }
@@ -92,13 +92,13 @@ public class InstallerStatesOfGame : MonoBehaviour, IMediadorAR
             // Raycast hits are sorted by distance, so the first one
             // will be the closest hit.
             var hitPose = s_Hits[0].pose;
-            stateOfGame.Write($"{hitPose.position} pose");
+            //stateOfGame.Write($"{hitPose.position} pose");
             
             var spawnedObject = Instantiate(prefab);
             spawnedObject.transform.position = hitPose.position;
             spawnedObject.transform.rotation = hitPose.rotation;
             
-            stateOfGame.Write($"{spawnedObject.transform.position} spawned");
+            //stateOfGame.Write($"{spawnedObject.transform.position} spawned");
             
             return spawnedObject;
         }
@@ -129,7 +129,7 @@ public class InstallerStatesOfGame : MonoBehaviour, IMediadorAR
             //button is released
             _hasClick = false;
         }
-        stateOfGame.Write($"_hasClick {_hasClick}");
+        //stateOfGame.Write($"_hasClick {_hasClick}");
     }
     public bool Touch()
     {

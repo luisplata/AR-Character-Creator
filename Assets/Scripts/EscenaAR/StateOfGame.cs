@@ -2,9 +2,7 @@ using System;
 using ServiceLocatorPath;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
-using UnityEngine.XR.ARSubsystems;
 
 public class StateOfGame : MonoBehaviour, IMediator
 {
@@ -41,7 +39,7 @@ public class StateOfGame : MonoBehaviour, IMediator
         _buclePrincipal = true;
         StartState(_enemyStatesConfiguration.GetInitialState());
         canUse = true;
-        Write($"Configurado");
+        //Write($"Configurado");
         //_scaleMultiply = 
     }
 
@@ -91,15 +89,14 @@ public class StateOfGame : MonoBehaviour, IMediator
 
     public void Write(string text)
     {
-        Debug.Log(text);
-        debugging.text += $"{text} \n";
+        ServiceLocator.Instance.GetService<IDebugText>().Log(text);
     }
 
     public bool ShootRaycast(Action action)
     {
         try
         {
-            Write($"instancia");
+            //Write($"instancia");
             _sceneInteractive = _ar.InstantiateObjectInRaycast(GetPositionInWord(), m_PlacedPrefab).GetComponent<PjController>();
             _sceneInteractive.Configure(uiController);
             action?.Invoke();
@@ -108,6 +105,7 @@ public class StateOfGame : MonoBehaviour, IMediator
         catch (Exception e)
         {
             Write($"Error - {e.Message}");
+            ServiceLocator.Instance.GetService<IShowErrors>().ShowError(e.Message);
             return false;
         }
     }
@@ -183,7 +181,7 @@ public class StateOfGame : MonoBehaviour, IMediator
 
     public Vector2 GetPositionInWord()
     {
-        Write($"{_ar.GetMousePosition()} _ar.GetMousePosition()");
+        //Write($"{_ar.GetMousePosition()} _ar.GetMousePosition()");
         return _ar.GetMousePosition();
     }
 

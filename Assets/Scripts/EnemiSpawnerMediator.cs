@@ -29,7 +29,7 @@ public class EnemiSpawnerMediator : MonoBehaviour
         {
             detaTimeLocal = 0;
             timeInterval = Random.Range(1, 5);
-            _mediator.Write("Spawn!");
+            //_mediator.Write("Spawn!");
             var enemyInGame = Instantiate(enemyTemplate, transform);
             var point = listOfPoints[Random.Range(0, listOfPoints.Count)];
             enemyInGame.transform.position = point.transform.position;

@@ -14,15 +14,15 @@ public class ArShooter : ShooterToEnemies
 
     protected override void FixUpdate()
     {
-        _mediator.Write("Touch");
+        //_mediator.Write("Touch");
         var _mousePos = _mediator.GetMousePositionInScream();
         var touchPosition = _mousePos;//Input.GetTouch(0).position;
         var ray = _mediator.GetSessionOrigin().ScreenPointToRay(touchPosition);
         var allCol = Physics.RaycastAll(ray);
         foreach (var hit in allCol)
         {
-            _mediator.Write($"{hit.collider.gameObject.name} colisiono");
-            _mediator.Write($"{touchPosition} touchPosition");
+            //_mediator.Write($"{hit.collider.gameObject.name} colisiono");
+            //_mediator.Write($"{touchPosition} touchPosition");
             if (hit.collider.gameObject.TryGetComponent<ObjetoClickeable>(out var e))
             {
                 e.Click();

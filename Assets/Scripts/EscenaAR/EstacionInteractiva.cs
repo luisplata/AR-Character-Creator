@@ -48,13 +48,13 @@ public class EstacionInteractiva : MonoBehaviour
 
     public void ButtonVideo()
     {
-        _mediator.Write("click in video");
+        //_mediator.Write("click in video");
         animDeContenido.SetBool("showVideo", true);
         anim.gameObject.SetActive(false);
     }
     public void ButtonAudio()
     {
-        _mediator.Write("click in audio");
+        //_mediator.Write("click in audio");
         animDeContenido.SetBool("showAudio", true);
         anim.gameObject.SetActive(false);
     }
